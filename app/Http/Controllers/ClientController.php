@@ -47,13 +47,13 @@ class ClientController extends Controller
             'name' => $request->input('pengantinpria'),
             'email' => $request->input('email'),
             'password' => Hash::make('12345678'),
-            'role' => 'Client'
+            'role' => 'CLIENT'
         ];
 
 
         User::create($dataUser);
 
-        return back()->with('message_add', 'Data Client Sudah di Tambahkan');
+        return back()->with('message_delete', 'Data Customer Sudah di Hapus');
     }
 
     /**
@@ -75,20 +75,21 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Client $client)
     {
-        $data = [
-            'pengantinpria' => $request->input('pengantinpria'),
-            'pengantinwanita' => $request->input('pengantinwanita'),
-            'alamat' => $request->input('alamat'),
-            'notelp' => $request->input('notelp'),
-        ];
+        $validated = $request->validate([
+            'pengantinpria' => 'required|string|max:255',
+            'pengantinwanita' => 'required|string|max:255',
+            'alamat' => 'required|string',
+            'notelp' => 'required|string|max:20',
+            'email' => 'required|email',
+        ]);
 
+        $client->update($validated);
 
-        $datas = Client::findOrFail($id);
-        $datas->update($data);
-        return back()->with('message_update', 'Data Customer Sudah di Update');
+        return redirect()->route('client.index')->with('success', 'Client updated.');
     }
+
 
     /**
      * Remove the specified resource from storage.
