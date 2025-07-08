@@ -87,7 +87,7 @@ class WardrobeController extends Controller
             $datas = Wardrobe::findOrFail($id);
             $datas->update($data);
             return redirect()
-                ->route('tenda.index')
+                ->route('wardrobe.index')
                 ->with('message_insert', 'Data Album Sudah ditambahkan');
         } catch (\Exception $e) {
             echo "<script>console.error('PHP Error: " .
@@ -107,7 +107,7 @@ class WardrobeController extends Controller
             return back()->with('message_delete', 'Data Customer Sudah dihapus');
 
             return redirect()
-                ->route('tenda.index')
+                ->route('wardrobe.index')
                 ->with('message_insert', 'Data Album Sudah ditambahkan');
         } catch (\Exception $e) {
             echo "<script>console.error('PHP Error: " .

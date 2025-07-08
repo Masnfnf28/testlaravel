@@ -1,323 +1,133 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Client Management') }}
-            </h2>
-            <div class="flex items-center space-x-4">
-                <div class="relative w-64">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                        </svg>
-                    </div>
-                    <input type="text" placeholder="Search clients..."
-                        class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
-                </div>
-            </div>
-        </div>
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('CLIENT') }}
+        </h2>
     </x-slot>
 
-    <div class="py-8">
+    <div class="py-10">
         <div class="max-w-10xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex flex-col lg:flex-row gap-6">
-                <!-- Form Section -->
-                <div
-                    class="w-full lg:w-1/3 bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
-                    <div class="p-5 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-t-lg">
-                        <i class="fas fa-user-plus mr-2"></i> ADD NEW CLIENT
+            <div class="gap-5 items-start flex flex-col lg:flex-row">
+                <!-- FORM INPUT CLIENT -->
+                <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg w-full lg:w-1/3 p-4">
+                    <div class="bg-gray-100 mb-4 p-3 rounded-xl font-bold">
+                        FORM INPUT CLIENT
                     </div>
-                    <div class="p-6">
-                        <form method="POST" action="{{ route('client.store') }}" class="space-y-4">
-                            @csrf
-                            <div>
-                                <label for="pengantinpria"
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Nama Pengantin Pria <span class="text-red-500">*</span>
-                                </label>
-                                <input type="text" name="pengantinpria" required
-                                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
-                                    placeholder="Masukkan Nama Pengantin Pria">
-                            </div>
+                    <form method="POST" action="{{ route('client.store') }}">
+                        @csrf
+                        <x-input-field name="pengantinpria" label="Nama Pengantin Pria" required />
+                        <x-input-field name="pengantinwanita" label="Nama Pengantin Wanita" required />
+                        <x-textarea-field name="alamat" label="Alamat" required />
+                        <x-input-field name="notelp" label="No Telepon" type="number" required />
 
-                            <div>
-                                <label for="pengantinwanita"
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Nama Pengantin Wanita <span class="text-red-500">*</span>
-                                </label>
-                                <input type="text" name="pengantinwanita" required
-                                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
-                                    placeholder="Masukkan Nama Pengantin Wanita">
-                            </div>
-
-                            <div>
-                                <label for="alamat"
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Alamat <span class="text-red-500">*</span>
-                                </label>
-                                <textarea name="alamat" rows="3" required
-                                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
-                                    placeholder="Masukkan Alamat"></textarea>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label for="notelp"
-                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                        No Telp <span class="text-red-500">*</span>
-                                    </label>
-                                    <input type="number" name="notelp" required
-                                        class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
-                                        placeholder="Masukkan No Telepon">
-                                </div>
-
-                                <div>
-                                    <label for="email"
-                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                        Email <span class="text-red-500">*</span>
-                                    </label>
-                                    <input type="email" name="email" required
-                                        class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
-                                        placeholder="Masukkan Email">
-                                </div>
-                            </div>
-
-                            <div class="pt-2">
-                                <button type="submit"
-                                    class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-[1.01] shadow-md">
-                                    <i class="fas fa-save mr-2"></i> Simpan Client
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                        <x-button type="submit" class="bg-blue-700 hover:bg-blue-800">Submit</x-button>
+                    </form>
                 </div>
 
-                <!-- Data Table Section -->
-                <div
-                    class="w-full bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
-                    <div
-                        class="p-5 bg-gradient-to-r from-purple-500 to-purple-600 text-white font-bold rounded-t-lg flex justify-between items-center">
-                        <div>
-                            <i class="fas fa-users mr-2"></i> CLIENT DATABASE
-                        </div>
-                        <div class="text-sm font-normal">
-                            Total: {{ $clients->total() }} Clients
-                        </div>
+                <!-- TABEL DATA CLIENT -->
+                <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg w-full p-4">
+                    <div class="bg-gray-100 mb-4 p-3 rounded-xl font-bold text-center">
+                        DATA CLIENT
                     </div>
-
                     <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead class="bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                        <table class="w-full text-sm text-gray-700 dark:text-gray-300 text-center">
+                            <thead class="text-xs bg-gray-50 dark:bg-gray-700">
                                 <tr>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider rounded-tl-lg">
-                                        No</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                                        Pengantin Pria</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                                        Pengantin Wanita</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Alamat
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">No
-                                        Telepon</th>
-                                    <th
-                                        class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider rounded-tr-lg">
-                                        Actions</th>
+                                    <th>NO</th>
+                                    <th>PENGANTIN PRIA</th>
+                                    <th>PENGANTIN WANITA</th>
+                                    <th>ALAMAT</th>
+                                    <th>NO TELEPON</th>
+                                    <th>ACTION</th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                                @foreach ($clients as $client)
-                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150">
-                                        <td
-                                            class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                                            {{ ($clients->currentPage() - 1) * $clients->perPage() + $loop->iteration }}
+                            <tbody>
+                                @foreach ($clients as $index => $client)
+                                    <tr class="border-b dark:border-gray-600">
+                                        <td>{{ ($clients->currentPage() - 1) * $clients->perPage() + $loop->iteration }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                                            {{ $client->pengantinpria }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                                            {{ $client->pengantinwanita }}
-                                        </td>
-                                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">
-                                            <div class="truncate max-w-xs">{{ $client->alamat }}</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                                            {{ $client->notelp }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <div class="flex justify-end space-x-2">
-                                                <button onclick="editSourceModal(this)" data-modal-target="sourceModal"
-                                                    data-id="{{ $client->id }}"
-                                                    data-pengantinpria="{{ $client->pengantinpria }}"
-                                                    data-pengantinwanita="{{ $client->pengantinwanita }}"
-                                                    data-alamat="{{ $client->alamat }}"
-                                                    data-notelp="{{ $client->notelp }}"
-                                                    data-email="{{ $client->email }}"
-                                                    class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300 p-2 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors duration-200">
-                                                    <i class="fas fa-edit text-lg"></i>
-                                                </button>
-                                                <button
-                                                    onclick="return clientDelete('{{ $client->id }}','{{ $client->pengantinpria }}','{{ $client->pengantinwanita }}')"
-                                                    class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors duration-200">
-                                                    <i class="fas fa-trash-alt text-lg"></i>
-                                                </button>
-                                            </div>
+                                        <td>{{ $client->pengantinpria }}</td>
+                                        <td>{{ $client->pengantinwanita }}</td>
+                                        <td>{{ $client->alamat }}</td>
+                                        <td>{{ $client->notelp }}</td>
+                                        <td>
+                                            <button onclick="editSourceModal(this)" data-modal-target="sourceModal"
+                                                data-id="{{ $client->id }}"
+                                                data-pengantinpria="{{ $client->pengantinpria }}"
+                                                data-pengantinwanita="{{ $client->pengantinwanita }}"
+                                                data-alamat="{{ $client->alamat }}"
+                                                data-notelp="{{ $client->notelp }}"
+                                                class="bg-amber-400 text-white p-2 rounded hover:bg-amber-500">
+                                                Edit
+                                            </button>
+                                            <button
+                                                onclick="clientDelete('{{ $client->id }}', '{{ $client->pengantinpria }}', '{{ $client->pengantinwanita }}')"
+                                                class="bg-red-500 text-white p-2 rounded hover:bg-red-600">
+                                                Hapus
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>
-
-                    <div
-                        class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600 rounded-b-lg">
-                        {{ $clients->links() }}
+                        <div class="mt-4">
+                            {{ $clients->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Edit Modal -->
-    <div class="fixed inset-0 z-50 hidden" id="sourceModal">
-        <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity" aria-hidden="true"></div>
-        <div class="fixed inset-0 flex items-center justify-center p-4">
-            <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-xl transform transition-all">
-                <div
-                    class="p-5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-t-xl flex justify-between items-center">
-                    <h3 class="text-lg font-semibold" id="title_source">
-                        <i class="fas fa-edit mr-2"></i> Update Client
-                    </h3>
+    <!-- MODAL EDIT CLIENT -->
+    <div id="sourceModal" class="fixed inset-0 hidden items-center justify-center z-50">
+        <div class="fixed inset-0 bg-black opacity-50"></div>
+        <div class="relative w-full md:w-1/2 bg-white rounded-lg shadow p-6 mx-auto z-50">
+            <h3 class="text-lg font-semibold mb-4" id="title_source">Edit Client</h3>
+            <form method="POST" id="formSourceModal">
+                @csrf
+                @method('PUT')
+                <x-input-field id="pengantinpria" name="pengantinpria" label="Nama Pengantin Pria" required />
+                <x-input-field id="pengantinwanita" name="pengantinwanita" label="Nama Pengantin Wanita" required />
+                <x-input-field id="alamat" name="alamat" label="Alamat" required />
+                <x-input-field id="notelp" name="notelp" label="No Telepon" type="number" required />
+                <div class="flex justify-end space-x-3 mt-4">
+                    <button type="submit" id="formSourceButton"
+                        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Simpan</button>
                     <button type="button" onclick="sourceModalClose(this)" data-modal-target="sourceModal"
-                        class="text-white hover:text-gray-200 focus:outline-none">
-                        <i class="fas fa-times text-xl"></i>
-                    </button>
+                        class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Batal</button>
                 </div>
-                <form method="POST" id="formSourceModal">
-                    @csrf
-                    @method('PATCH')
-                    <div class="p-6 space-y-4">
-                        <div>
-                            <label for="pengantinpria"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                Nama Pengantin Pria
-                            </label>
-                            <input type="text" id="pengantinpria" name="pengantinpria"
-                                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                placeholder="Nama Pengantin Pria">
-                        </div>
-
-                        <div>
-                            <label for="pengantinwanita"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                Nama Pengantin Wanita
-                            </label>
-                            <input type="text" id="pengantinwanita" name="pengantinwanita"
-                                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                placeholder="Nama Pengantin Wanita">
-                        </div>
-
-                        <div>
-                            <label for="alamat"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                Alamat
-                            </label>
-                            <textarea id="alamat" name="alamat" rows="3"
-                                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                placeholder="Alamat"></textarea>
-                        </div>
-
-                        <div>
-                            <label for="notelp"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                No Telepon
-                            </label>
-                            <input type="text" id="notelp" name="notelp"
-                                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                placeholder="No Telepon">
-                        </div>
-
-                        <div>
-                            <label for="email"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                Email
-                            </label>
-                            <input type="email" id="email" name="email"
-                                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                placeholder="Email">
-                        </div>
-
-                    </div>
-
-                    <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 rounded-b-xl flex justify-end space-x-3">
-                        <button type="button" data-modal-target="sourceModal" onclick="sourceModalClose(this)"
-                            class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-600 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors duration-200">
-                            Batal
-                        </button>
-                        <button type="submit" id="formSourceButton"
-                            class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-md">
-                            Simpan Perubahan
-                        </button>
-                    </div>
-                </form>
-            </div>
+            </form>
         </div>
     </div>
 </x-app-layout>
 
 <script>
-    // All JavaScript functions remain exactly the same
     const editSourceModal = (button) => {
-        const formModal = document.getElementById('formSourceModal');
-        const modalTarget = button.dataset.modalTarget;
         const id = button.dataset.id;
-        const pengantinpria = button.dataset.pengantinpria;
-        const pengantinwanita = button.dataset.pengantinwanita;
-        const alamat = button.dataset.alamat;
-        const notelp = button.dataset.notelp;
-        const email = button.dataset.email;
+        const url = `{{ url('client') }}/${id}`;
+        const form = document.getElementById('formSourceModal');
 
-        const url = `/client/${id}`; // Gunakan endpoint Laravel resource update
-
-        const modal = document.getElementById(modalTarget);
-        document.getElementById('title_source').innerText = `Update client ${pengantinpria} & ${pengantinwanita}`;
-
-        document.getElementById('pengantinpria').value = pengantinpria;
-        document.getElementById('pengantinwanita').value = pengantinwanita;
-        document.getElementById('alamat').value = alamat;
-        document.getElementById('notelp').value = notelp;
-        document.getElementById('email').value = email;
-
-        document.getElementById('formSourceModal').setAttribute('action', url);
-
-        modal.classList.remove('hidden');
+        form.setAttribute('action', url);
+        document.getElementById('pengantinpria').value = button.dataset.pengantinpria;
+        document.getElementById('pengantinwanita').value = button.dataset.pengantinwanita;
+        document.getElementById('alamat').value = button.dataset.alamat;
+        document.getElementById('notelp').value = button.dataset.notelp;
+        document.getElementById('sourceModal').classList.remove('hidden');
     };
-
 
     const sourceModalClose = (button) => {
         const modalTarget = button.dataset.modalTarget;
-        let status = document.getElementById(modalTarget);
-        status.classList.toggle('hidden');
-    }
+        document.getElementById(modalTarget).classList.add('hidden');
+    };
 
-    const clientDelete = async (id, pengantinpria, pengantinwanita) => {
-        let tanya = confirm(
-            `Apakah anda yakin untuk menghapus Client ${pengantinpria} dan ${pengantinwanita} ?`);
-        if (tanya) {
+    const clientDelete = async (id, pria, wanita) => {
+        if (confirm(`Hapus client ${pria} & ${wanita}?`)) {
             await axios.post(`/client/${id}`, {
-                    '_method': 'DELETE',
-                    '_token': $('meta[name="csrf-token"]').attr('content')
-                })
-                .then(function(response) {
-                    // Handle success
-                    location.reload();
-                })
-                .catch(function(error) {
-                    // Handle error
-                    alert('Error deleting record');
-                    console.log(error);
-                });
+                    _method: 'DELETE',
+                    _token: '{{ csrf_token() }}'
+                }).then(() => location.reload())
+                .catch(() => alert('Gagal menghapus'));
         }
     }
 </script>

@@ -10,7 +10,7 @@ class AlbumController extends Controller
     public function index()
     {
         try {
-            $album = Album::paginate(5);
+            $album = Album::paginate(6);
             return view('page.album.index')->with([
                 'album' => $album,
             ]);

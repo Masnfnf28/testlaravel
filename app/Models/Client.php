@@ -14,7 +14,6 @@ class Client extends Model
         'pengantinwanita',
         'alamat',
         'notelp',
-        'email',
     ];
 
     protected $table = 'client';

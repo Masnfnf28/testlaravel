@@ -3,27 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Tampilkan daftar client.
      */
     public function index()
     {
         try {
-            $clients = Client::paginate(3);
+            $clients = Client::paginate(6);
             return view('page.client.index', compact('clients'));
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            echo "<script>console.error('PHP Error: " . addslashes($e->getMessage()) . "');</script>";
+            return view('error.index');
         }
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Tampilkan form tambah client (tidak digunakan).
      */
     public function create()
     {
@@ -31,33 +30,31 @@ class ClientController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Simpan data client baru.
      */
     public function store(Request $request)
     {
-        $data = [
-            'pengantinpria' => $request->input('pengantinpria'),
-            'pengantinwanita' => $request->input('pengantinwanita'),
-            'alamat' => $request->input('alamat'),
-            'notelp' => $request->input('notelp'),
-        ];
-        Client::create($data);
+        try {
+            $data = [
+                'pengantinpria' => $request->input('pengantinpria'),
+                'pengantinwanita' => $request->input('pengantinwanita'),
+                'alamat' => $request->input('alamat'),
+                'notelp' => $request->input('notelp'),
+            ];
 
-        $dataUser = [
-            'name' => $request->input('pengantinpria'),
-            'email' => $request->input('email'),
-            'password' => Hash::make('12345678'),
-            'role' => 'CLIENT'
-        ];
+            Client::create($data);
 
-
-        User::create($dataUser);
-
-        return back()->with('message_delete', 'Data Customer Sudah di Hapus');
+            return redirect()
+                ->route('client.index')
+                ->with('message_insert', 'Data client berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            echo "<script>console.error('PHP Error: " . addslashes($e->getMessage()) . "');</script>";
+            return view('error.index');
+        }
     }
 
     /**
-     * Display the specified resource.
+     * Tampilkan detail client (tidak digunakan).
      */
     public function show(string $id)
     {
@@ -65,7 +62,7 @@ class ClientController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Tampilkan form edit client (tidak digunakan).
      */
     public function edit(string $id)
     {
@@ -73,35 +70,41 @@ class ClientController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update data client.
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request, string $id)
     {
-        $validated = $request->validate([
-            'pengantinpria' => 'required|string|max:255',
-            'pengantinwanita' => 'required|string|max:255',
-            'alamat' => 'required|string',
-            'notelp' => 'required|string|max:20',
-            'email' => 'required|email',
-        ]);
+        try {
+            $data = [
+                'pengantinpria' => $request->input('pengantinpria'),
+                'pengantinwanita' => $request->input('pengantinwanita'),
+                'alamat' => $request->input('alamat'),
+                'notelp' => $request->input('notelp'),
+            ];
 
-        $client->update($validated);
+            $client = Client::findOrFail($id);
+            $client->update($data);
 
-        return redirect()->route('client.index')->with('success', 'Client updated.');
+            return back()->with('message_update', 'Data client berhasil diperbarui.');
+        } catch (\Exception $e) {
+            echo "<script>console.error('PHP Error: " . addslashes($e->getMessage()) . "');</script>";
+            return view('error.index');
+        }
     }
 
-
     /**
-     * Remove the specified resource from storage.
+     * Hapus data client.
      */
     public function destroy(string $id)
     {
-        $data = Client::findOrFail($id);
-        $email = $data->email;
+        try {
+            $client = Client::findOrFail($id);
+            $client->delete();
 
-        User::where('email', $email)->delete();
-
-        $data->delete();
-        return back()->with('message_delete', 'Data Customer Sudah dihapus');
+            return back()->with('message_delete', 'Data client berhasil dihapus.');
+        } catch (\Exception $e) {
+            echo "<script>console.error('PHP Error: " . addslashes($e->getMessage()) . "');</script>";
+            return view('error.index');
+        }
     }
 }
