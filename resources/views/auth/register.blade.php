@@ -45,8 +45,8 @@
             <select class="js-example-placeholder-single js-states form-control w-full m-6"
                 name="role" data-placeholder="Pilih Role">
                 <option value="">Pilih...</option>
-                <option value="Admin">Admin</option>
-                <option value="Client">Client</option>
+                <option value="Admin">Coba</option>
+                <option value="Client">Cek</option>
                 <option value="Owner">Owner</option>
             </select>
         </div>
